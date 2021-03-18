@@ -1,0 +1,8 @@
+juman++ : python3 -m pip install pyknp --user
+
+transformer : python3 -m pip install transformers --user
+
+pytorch : python3 -m pip install torch==1.7.1+cu101 torchvision==0.8.2+cu101 torchaudio==0.7.2 --user -f https://download.pytorch.org/whl/torch_stable.html
+
+MeCab : python3 -m pip install mecab-python3 --user
+

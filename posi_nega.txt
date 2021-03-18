@@ -1,0 +1,29 @@
+(1) MeCab
+    1. Mecabのインストール
+        {1} wget 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE' -O mecab-0.996.tar.gz
+        {2} tar zxvf mecab-0.996.tar.gz
+        {3} cd mecab-0.996
+        {4} ./configure --prefix=/home/username/usr/local --with-charset=utf8 --enable-utf8-only
+        {5} make
+        {6} make install
+        {7} echo "export PATH=/home/username/usr/local/bin/mecab/bin:\$PATH" >> ~/.bashrc
+        {8} echo "export LD_LIBRARY_PATH="/home/username/usr/local/lib:$LD_LIBRARY_PATH"" >> ~/.bashrc
+        {9} source ~/.bashrc
+    2. MeCabで用いる単語辞書のインストール
+        {1} wget 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM' -O mecab-ipadic-2.7.0-20070801.tar.gz
+        {2} tar zxvf mecab-ipadic-2.7.0-20070801.tar.gz
+        {3} cd mecab-ipadic-2.7.0-20070801
+        {4} ./configure --with-mecab-config=/home/username/usr/local/bin/mecab-config --with-charset=utf8
+        {5} make
+        {6} make install
+        {7} echo "export MECABRC="/home/username/usr/local/etc/mecabrc"" >> ~/.bashrc
+        {8} source ~/.bashrc
+        {9} git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
+        {10} ./mecab-ipadic-neologd/bin/install-mecab-ipadic-neologd -n -y -p /home/username/usr/local/lib/mecab/dic/neologd
+    3. ライブラリのインストール
+        {1} python3 -m pip install mecab-python3 --user
+
+(2) ライブラリのインストール
+    {1} python3 -m pip install torch==1.7.1+cu101 torchvision==0.8.2+cu101 torchaudio==0.7.2 --user -f https://download.pytorch.org/whl/torch_stable.html
+    {2} python3 -m pip install transformers --user
+
