@@ -1,5 +1,5 @@
 #!/bin/tcsh
-#PBS -l nodes=1:ppn=4:metideep-G2
+#PBS -l nodes=1:ppn=16:metideep-C2
 #PBS -q default
 #PBS -j oe
 #PBS -o stdout

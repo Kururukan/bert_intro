@@ -46,8 +46,8 @@ class BERTClass(torch.nn.Module):
         self.fc = torch.nn.Linear(768, otuput_size)
 
     def forward(self, ids, mask):
-        _, out = self.bert(ids, attention_mask=mask)
-        out = self.fc(self.drop(out))
+        out = self.bert(ids, attention_mask=mask)
+        out = self.fc(self.drop(out[1]))
         return out
 
 
@@ -149,6 +149,7 @@ def calculate_accuracy(model, dataset, device):
             labels = data['labels'].to(device)
 
             # 順伝播 + 予測値の取得 + 正解数のカウント
+            print(type(ids), type(mask))
             outputs = model.forward(ids, mask)
             pred = torch.argmax(outputs, dim=-1).cpu().numpy()
             labels = torch.argmax(labels, dim=-1).cpu().numpy()
@@ -196,9 +197,9 @@ if __name__ == '__main__':
     # Datasetの作成
     max_len = 20
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    dataset_train = CreateDataset(train['TITLE'], y_train, tokenizer, max_len)
-    dataset_valid = CreateDataset(valid['TITLE'], y_valid, tokenizer, max_len)
-    dataset_test = CreateDataset(test['TITLE'], y_test, tokenizer, max_len)
+    dataset_train = CreateDataset(train['TITLE'][:1000], y_train[:1000], tokenizer, max_len)
+    dataset_valid = CreateDataset(valid['TITLE'][:300], y_valid[:300], tokenizer, max_len)
+    dataset_test = CreateDataset(test['TITLE'][:300], y_test[:300], tokenizer, max_len)
 
     for var in dataset_train[0]:
         print(f'{var}: {dataset_train[0][var]}')
@@ -206,7 +207,7 @@ if __name__ == '__main__':
     # パラメータの設定
     DROP_RATE = 0.4
     OUTPUT_SIZE = 4
-    BATCH_SIZE = 32
+    BATCH_SIZE = 4
     NUM_EPOCHS = 4
     LEARNING_RATE = 2e-5
 
@@ -225,3 +226,6 @@ if __name__ == '__main__':
     print(f'正解率（学習データ）：{calculate_accuracy(model, dataset_train, device):.3f}')
     print(f'正解率（検証データ）：{calculate_accuracy(model, dataset_valid, device):.3f}')
     print(f'正解率（評価データ）：{calculate_accuracy(model, dataset_test, device):.3f}')
+
+    end = time.time()
+    print('time :', end - start)

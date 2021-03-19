@@ -1,5 +1,5 @@
 #!/bin/tcsh
-#PBS -l nodes=1:ppn=4:metideep-G2
+#PBS -l nodes=1:ppn=16:metideep-C1
 #PBS -q default
 #PBS -j oe
 #PBS -o stdout
@@ -13,6 +13,6 @@ set path =($path /home/username/.local)
 
 # pipenv shell error
 
-python3 posi_nega.py
+python3 filename.py
 
 hostname
